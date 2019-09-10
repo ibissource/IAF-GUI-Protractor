@@ -1,15 +1,15 @@
 const StatusPage = require('./pages/status.page');
-//const CookieBar = require('./components/cookiebar.component');
+const CookieBar = require('./components/cookiebar.component');
 
 describe('Status Page tests', function() {
     let status = new StatusPage();
-    //let cookiebar = new CookieBar();
+    let cookiebar = new CookieBar();
     let EC = protractor.ExpectedConditions;
 
     beforeAll(function() {
         browser.get("#/status");
-       // cookiebar.closeIfPresent();
         browser.wait(EC.visibilityOf(status.adapter), 100000);
+        cookiebar.closeIfPresent();
     });
 
     it("Should show filter buttons", function() {
