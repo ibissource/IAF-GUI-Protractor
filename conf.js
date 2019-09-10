@@ -5,6 +5,7 @@ exports.config = {
     framework: 'jasmine2',
     seleniumServerJar: seleniumServer.path,
     baseUrl: 'https://ibis4example.ibissource.org/iaf/gui',
+    directconnect: false,
 
     capabilities: {
         browserName: 'chrome',
