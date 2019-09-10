@@ -3,7 +3,7 @@ const JasmineConsoleReporter = require('jasmine-console-reporter');
 
 exports.config = {
     framework: 'jasmine2',
-    seleniumServerJar: seleniumServer.path,
+   // seleniumServerJar: seleniumServer.path,
     baseUrl: 'https://ibis4example.ibissource.org/iaf/gui',
     directConnect: true,
 
