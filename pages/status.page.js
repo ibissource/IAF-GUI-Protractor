@@ -5,12 +5,14 @@ var StatusPage = function () {
     
     this.searchField = element(by.model("searchText"));
 
+    this.adapters = element.all(by.repeater("adapter in adapters"));
     this.adapter = element.all(by.repeater("adapter in adapters")).get(0);
     this.adapterInfo = this.adapter.element(by.css('.ibox-content'));
     this.adapterInfoToggle = this.adapter.element(by.css('.ibox-title'));
     this.adapterToggle = this.adapterInfo.all(by.css('.table .btn.btn-xs')).get(0);
 
-    this.adapters = element.all(by.repeater("adapter in adapters"));
+    this.configurations = element.all(by.repeater("configuration in configurations"));
+    this.summaryAdaptersStarted = element(by.binding("adapterSummary.started"));
 }
 
 module.exports = StatusPage;
