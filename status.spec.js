@@ -54,15 +54,21 @@ describe('Status Page tests', function() {
         status.adapterInfoToggle.click();
     });
 
-   
+    it("Should use the correct URL when clicking configuration tabs", function() {
+        status.configurations.each(function(configuration, index) {
+            configuration.click();
+            configuration.getText().then(function(text) {
+                expect(browser.getCurrentUrl()).toEqual(browser.baseUrl + "/#/status?configuration=" + text);
+            });
+        });
+    });
 
-    // it("Should change color when adapter is toggled on or off", async function() {
-    //      status.adapterInfoToggle.click();
-    //     expect( status.adapterToggle.isDisplayed()).toBe(true);
-
-    //      status.adapterToggle.click();
-    //      browser.wait( expect(status.adapterInfoToggle.getCssValue('border-color')).toEqual("rgb(234, 57, 76)"), 10000);
-    //      status.adapterToggle.click();
-    //      browser.wait( expect(status.adapterInfoToggle.getCssValue('border-color')).toEqual("rgb(26, 179, 148)"), 10000);
-    // });
+    it("Should show the correct amount of adapters when clicking configuration tabs", function() {
+        status.configurations.each(function(configuration, index) {
+            configuration.click();
+            status.summaryAdaptersStarted.getText().then(function(text){  
+                expect(parseInt(text)).toBe(status.adapters.count());
+            }) 
+        });
+    });
 });
