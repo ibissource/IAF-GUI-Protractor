@@ -28,15 +28,15 @@ describe('Status Page tests', function() {
 
     it("Should show the correct url when filters are clicked", function() {
         status.filterStarted.click();
-        expect( browser.getCurrentUrl()).toEqual("https://ibis4example.ibissource.org/iaf/gui/#/status?filter=stopped%2Bwarning");
+        expect(browser.getCurrentUrl()).toEqual(browser.baseUrl + "/#/status?filter=stopped%2Bwarning");
         status.filterStarted.click();
 
         status.filterStopped.click();
-        expect( browser.getCurrentUrl()).toEqual("https://ibis4example.ibissource.org/iaf/gui/#/status?filter=started%2Bwarning");
+        expect(browser.getCurrentUrl()).toEqual(browser.baseUrl + "/#/status?filter=started%2Bwarning");
         status.filterStopped.click();
 
         status.filterWarning.click();
-        expect( browser.getCurrentUrl()).toEqual("https://ibis4example.ibissource.org/iaf/gui/#/status?filter=started%2Bstopped");
+        expect(browser.getCurrentUrl()).toEqual(browser.baseUrl + "/#/status?filter=started%2Bstopped");
         status.filterWarning.click();
     });
 
