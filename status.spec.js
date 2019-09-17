@@ -55,7 +55,7 @@ describe('Status Page tests', function() {
     });
 
     it("Should use the correct URL when clicking configuration tabs", function() {
-        status.configurations.each(function(configuration, index) {
+        status.configurations.each(function(configuration) {
             configuration.click();
             configuration.getText().then(function(text) {
                 expect(browser.getCurrentUrl()).toEqual(browser.baseUrl + "/#/status?configuration=" + text);
@@ -64,7 +64,7 @@ describe('Status Page tests', function() {
     });
 
     it("Should show the correct amount of adapters when clicking configuration tabs", function() {
-        status.configurations.each(function(configuration, index) {
+        status.configurations.each(function(configuration) {
             configuration.click();
             status.summaryAdaptersStarted.getText().then(function(text){  
                 expect(parseInt(text)).toBe(status.adapters.count());
