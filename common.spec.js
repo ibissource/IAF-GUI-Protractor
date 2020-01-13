@@ -9,7 +9,7 @@ describe('Common tests', function() {
     let EC = protractor.ExpectedConditions;
 
     beforeAll(function() {
-        browser.get("#/status");
+        browser.get("#!/status");
         browser.wait(EC.visibilityOf(common.serverTime), 100000);
         cookiebar.closeIfPresent();
     });

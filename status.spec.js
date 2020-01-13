@@ -7,7 +7,7 @@ describe('Status Page tests', function() {
     let EC = protractor.ExpectedConditions;
 
     beforeAll(function() {
-        browser.get("#/status");
+        browser.get("#!/status");
         browser.wait(EC.visibilityOf(status.adapter), 100000);
         cookiebar.closeIfPresent();
     });
@@ -28,15 +28,15 @@ describe('Status Page tests', function() {
 
     it("Should show the correct url when filters are clicked", function() {
         status.filterStarted.click();
-        expect(browser.getCurrentUrl()).toEqual(browser.baseUrl + "/#/status?filter=stopped%2Bwarning");
+        expect(browser.getCurrentUrl()).toEqual(browser.baseUrl + "/#!/status?filter=stopped%2Bwarning");
         status.filterStarted.click();
 
         status.filterStopped.click();
-        expect(browser.getCurrentUrl()).toEqual(browser.baseUrl + "/#/status?filter=started%2Bwarning");
+        expect(browser.getCurrentUrl()).toEqual(browser.baseUrl + "/#!/status?filter=started%2Bwarning");
         status.filterStopped.click();
 
         status.filterWarning.click();
-        expect(browser.getCurrentUrl()).toEqual(browser.baseUrl + "/#/status?filter=started%2Bstopped");
+        expect(browser.getCurrentUrl()).toEqual(browser.baseUrl + "/#!/status?filter=started%2Bstopped");
         status.filterWarning.click();
     });
 
@@ -58,7 +58,7 @@ describe('Status Page tests', function() {
         status.configurations.each(function(configuration) {
             configuration.click();
             configuration.getText().then(function(text) {
-                expect(browser.getCurrentUrl()).toEqual(browser.baseUrl + "/#/status?configuration=" + text);
+                expect(browser.getCurrentUrl()).toEqual(browser.baseUrl + "/#!/status?configuration=" + text);
             });
         });
     });

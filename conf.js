@@ -29,6 +29,6 @@ exports.config = {
             emoji: true 
         }));
         jasmine.getEnv().defaultTimeoutInterval = 120000;
-        browser.get('#/status');
+        browser.get('#!/status');
     }
 }

@@ -7,7 +7,7 @@ describe('Execute Query Page tests', function() {
     let EC = protractor.ExpectedConditions;
 
     beforeAll(function() {
-        browser.get("#/jdbc/execute-query");
+        browser.get("#!/jdbc/execute-query");
         browser.wait(EC.visibilityOf(querypage.queryField), 100000);
         cookiebar.closeIfPresent();
     });
