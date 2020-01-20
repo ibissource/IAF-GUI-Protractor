@@ -55,18 +55,23 @@ describe('Status Page tests', function() {
     });
 
     it("Should use the correct URL when clicking configuration tabs", function() {
-        status.configurations.each(function(configuration) {
-            configuration.click();
-            configuration.getText().then(function(text) {
+        status.configurations.each(function(configuration, i) {
+            status.configurations.get(i).click();
+            browser.sleep(100);
+            status.configurations.get(i).getText().then(function(text) {
+                status.configurations.get(i).element(by.css('a')).click();
                 expect(browser.getCurrentUrl()).toEqual(browser.baseUrl + "/#!/status?configuration=" + text);
             });
         });
+
+        
     });
 
     it("Should show the correct amount of adapters when clicking configuration tabs", function() {
-        status.configurations.each(function(configuration) {
-            configuration.click();
-            status.summaryAdaptersStarted.getText().then(function(text){  
+        status.configurations.each(function(configuration, i) {
+            status.configurations.get(i).click();
+            browser.sleep(100);
+            status.summaryAdaptersStarted.getText().then(function(text){
                 expect(parseInt(text)).toBe(status.adapters.count());
             }) 
         });
