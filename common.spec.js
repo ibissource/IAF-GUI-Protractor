@@ -25,7 +25,9 @@ describe('Common tests', function() {
         if(mm<10) mm='0'+mm;
     
         today = yyyy+'-'+mm+'-'+dd;
-        expect(common.serverTime.getText()).toContain(today);
+        common.serverTime.getText().then(function(text){
+            expect(text).toContain(today);
+        });
         browser.waitForAngularEnabled(true);
     });
 
