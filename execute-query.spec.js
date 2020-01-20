@@ -17,19 +17,25 @@ describe('Execute Query Page tests', function() {
         querypage.btnReset.click();
         querypage.sendQuery("select * from bla");
         browser.wait(EC.visibilityOf(querypage.result), 2000);
-        expect(querypage.result.getText()).toBe('"BLA1","BLA2"');
+        querypage.result.getText().then(function(text) {
+            expect(text).toBe('"BLA1","BLA2"');
+        });
     });
 
-    it('Should reset the form when clicking the reset button', function(){
+    it('Should reset the form when clicking the reset button', function() {
         querypage.queryField.sendKeys('Bla bla bla');
         querypage.btnReset.click();
-        expect(querypage.queryField.getText()).toBe('');  
+        querypage.queryField.getText().then(function(text) {
+            expect(text).toBe('');
+        });
     });
 
     it('Should return an error when executing a false query', function() {
         querypage.queryField.sendKeys('This is a false query');
         querypage.btnSend.click();
         browser.wait(EC.visibilityOf(querypage.warning), 1000);
-        expect(querypage.warning.getText()).toContain('error');
+        querypage.warning.getText().then(function(text) {
+            expect(text).toBe('error');
+        });
     });
 });
