@@ -14,17 +14,17 @@ describe('Common tests', function() {
         cookiebar.closeIfPresent();
     });
 
-    it("Should display the correct date in the upper right", function() {
-        browser.waitForAngularEnabled(false);
+    it("Should display the correct date in the upper right", function() { 
         var today = new Date();
         var dd = today.getDate();
         var mm = today.getMonth()+1;
         var yyyy = today.getFullYear();
-
         if(dd<10) dd='0'+dd;
         if(mm<10) mm='0'+mm;
-    
         today = yyyy+'-'+mm+'-'+dd;
+
+        browser.waitForAngularEnabled(false);
+        browser.sleep(300)
         common.serverTime.getText().then(function(text){
             expect(text).toContain(today);
         });
