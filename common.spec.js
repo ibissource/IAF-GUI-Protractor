@@ -11,7 +11,13 @@ describe('Common tests', function() {
     beforeAll(function() {
         browser.get("#!/status");
         browser.wait(EC.visibilityOf(common.serverTime), 100000);
+        browser.wait(EC.visibilityOf(common.stage), 10000);
         cookiebar.closeIfPresent();
+        // Wait until all text fields have there text set (no longer empty string). We test this
+        // by waiting for the last text field, which we assume to be the otap stage.
+        browser.wait(function() {return common.stage.getText().then(function(text) {
+            return text != ""
+        })}, 10000)
     });
 
     it("Should display the correct date in the upper right", function() { 
@@ -22,9 +28,7 @@ describe('Common tests', function() {
         if(dd<10) dd='0'+dd;
         if(mm<10) mm='0'+mm;
         today = yyyy+'-'+mm+'-'+dd;
-
         browser.waitForAngularEnabled(false);
-        browser.sleep(300)
         common.serverTime.getText().then(function(text){
             expect(text).toContain(today);
         });
