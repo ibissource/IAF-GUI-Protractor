@@ -10,7 +10,6 @@ describe('Common tests', function() {
 
     beforeAll(function() {
         browser.get("#!/status");
-        browser.wait(EC.visibilityOf(common.serverTime), 100000);
         browser.wait(EC.visibilityOf(common.stage), 10000);
         cookiebar.closeIfPresent();
         // Wait until all text fields have there text set (no longer empty string). We test this
