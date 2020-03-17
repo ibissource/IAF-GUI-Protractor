@@ -30,5 +30,6 @@ exports.config = {
         }));
         jasmine.getEnv().defaultTimeoutInterval = 120000;
         browser.get('#!/status');
+        browser.manage().window().setSize(1920, 1080);
     }
 }

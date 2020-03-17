@@ -37,10 +37,10 @@ describe('Common tests', function() {
     it("Should collapse and expand the menu when clicking the hamburger", function() {
         expect(sidebar.toggle.isPresent()).toBe(true);
         expect(sidebar.expandedLogo.isDisplayed()).toBe(true);
-        sidebar.toggle.click();
+        browser.actions().mouseMove(sidebar.minimize).click();
         expect(sidebar.expandedLogo.isDisplayed()).toBe(false);
         expect(sidebar.collapsedLogo.isDisplayed()).toBe(true);
-        sidebar.toggle.click();
+        // sidebar.maximize.click();
     });
 
     it("Should show the feedback modal after clicking a rating star", function() {
