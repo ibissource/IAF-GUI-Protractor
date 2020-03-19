@@ -9,6 +9,9 @@ describe('Execute Query Page tests', function() {
     beforeAll(function() {
         browser.get("#!/jdbc/execute-query");
         browser.wait(EC.visibilityOf(querypage.queryField), 100000);
+    });
+
+    beforeEach(function() {
         cookiebar.closeIfPresent();
     });
     

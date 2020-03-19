@@ -9,6 +9,9 @@ describe('Status Page tests', function() {
     beforeAll(function() {
         browser.get("#!/status");
         browser.wait(EC.visibilityOf(status.adapter), 100000);
+    });
+
+    beforeEach(function() {
         cookiebar.closeIfPresent();
     });
 
