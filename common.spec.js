@@ -11,12 +11,15 @@ describe('Common tests', function() {
     beforeAll(function() {
         browser.get("#!/status");
         browser.wait(EC.visibilityOf(common.stage), 10000);
-        cookiebar.closeIfPresent();
         // Wait until all text fields have there text set (no longer empty string). We test this
         // by waiting for the last text field, which we assume to be the otap stage.
         browser.wait(function() {return common.stage.getText().then(function(text) {
             return text != ""
         })}, 10000)
+    });
+
+    beforeEach(function() {
+        cookiebar.closeIfPresent();
     });
 
     it("Should display the correct date in the upper right", function() { 
