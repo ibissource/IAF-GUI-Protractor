@@ -21,7 +21,7 @@ describe('Execute Query Page tests', function() {
         querypage.sendQuery("select * from bla");
         browser.wait(EC.visibilityOf(querypage.result), 2000);
         querypage.result.getText().then(function(text) {
-            expect(text).toBe('"BLA1","BLA2"');
+            expect(text).toBe('BLA1,BLA2');
         });
     });
 
