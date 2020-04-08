@@ -21,7 +21,16 @@ describe('Execute Query Page tests', function() {
         querypage.sendQuery("select * from bla");
         browser.wait(EC.visibilityOf(querypage.result), 2000);
         querypage.result.getText().then(function(text) {
-            expect(text).toBe('"BLA1","BLA2"');
+            expect(text).toBe('BLA1,BLA2');
+        });
+    });
+
+    it('When result has special characters then result escaped', function() {
+        querypage.btnReset.click();
+        querypage.sendQuery("SELECT char(44) AS result");
+        browser.wait(EC.visibilityOf(querypage.result), 2000);
+        querypage.result.getText().then(function(text) {
+            expect(text).toBe("RESULT\n\",\"");
         });
     });
 
