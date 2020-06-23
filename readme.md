@@ -4,7 +4,7 @@
 Make sure you have the following installed beforehand:
 1. [NodeJS](https://nodejs.org/en/)
 2. [Protractor](https://www.protractortest.org/#/)
-3. Google Chrome
+3. [Google Chrome](https://www.google.com/chrome/)
 
 When using this test suite for the first time, you need to install the project dependencies. You have to do this by using NPM package manager in your terminal: 
 
