@@ -13,6 +13,12 @@ When using this test suite for the first time, you need to install the project d
 ## Getting started
 To run all tests, run the ```protractor conf.js``` command from the project root folder.
 
+## Fixing Chrome version error
+Sometimes, you will get an error:
+``` session not created: This version of ChromeDriver only supports Chrome version XX```
+
+To fix this, please run: ```webdriver-manager update```
+
 ## Making new tests
 __Tests are specified in the .spec.js files, we are using [this styleguide](https://github.com/CarmenPopoviciu/protractor-styleguide) for tests.__
 
