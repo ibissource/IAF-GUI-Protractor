@@ -1,4 +1,4 @@
-var ladybug_page = function() {
+var ladybugPage = function() {
 	this.stage = element.all(by.className("m-r-sm stage")).get(0);
 	this.iframe = element(by.tagName('iframe'));
 	this.pipeline = element(by.id('c_33_tr_0'));
@@ -20,4 +20,4 @@ var ladybug_page = function() {
 	};
 	
 };
-module.exports = new ladybug_page();
+module.exports = ladybugPage;

@@ -1,8 +1,13 @@
-var ladybug = require('./pages/ladybug.page');
+var ladybugPage = require('./pages/ladybug.page');
+var CookieBar = require('./components/cookiebar.component');
+
 describe('Test voor Ladybug foutmelding', function(){	
 	var EC = protractor.ExpectedConditions;	
-	it('Should give an error message', function(){
-		browser.waitForAngularEnabled(false);
+	var ladybug = new ladybugPage();
+	var cookiebar = new CookieBar();
+	
+	beforeAll(function() {
+        browser.waitForAngularEnabled(false);
 		browser.get('#!/testing/ladybug');
 		browser.wait(EC.visibilityOf(ladybug.stage), 30000);
 		//Wait until all text fields have there text set (no longer empty string).
@@ -10,12 +15,21 @@ describe('Test voor Ladybug foutmelding', function(){
             return result != ""
         })}, 30000);			
 		// switch to iframe
-		browser.switchTo().frame(ladybug.iframe.getWebElement());					
+		browser.switchTo().frame(ladybug.iframe.getWebElement());
+    });
+	
+	 beforeEach(function() {
+        cookiebar.closeIfPresent();
+    });
+	
+	it('Should give an error message', function(){							
 		// select the first pipeline from the storage
+		browser.wait(EC.presenceOf(ladybug.pipeline), 3000);
 		ladybug.pipeline.click();
 		// select the first pipeline report from "Reports"
 		browser.wait(EC.presenceOf(ladybug.report), 3000);
-		ladybug.report.click();		
+		ladybug.report.click();	
+		browser.sleep(500);
 		// copy the report
 		browser.wait(EC.visibilityOf(ladybug.copyTab), 3000);
 		ladybug.copyTab.click();
