@@ -18,10 +18,10 @@ To run all tests, run the ```protractor conf.js``` command from the project root
 Sometimes, you will get an error:
 ``` session not created: This version of ChromeDriver only supports Chrome version XX```
 
-To fix this, please run: ```webdriver-manager update```
+To fix this, please run: ```webdriver-manager update``` and update protractor to the newest version by running ```npm i -g protractor```
 
 ## Making new tests
-__Tests are specified in the .spec.js files, we are using [this styleguide](https://github.com/CarmenPopoviciu/protractor-styleguide) for tests.__
+⚠️ __Tests are specified in the .spec.js files, we are using [this styleguide](https://github.com/CarmenPopoviciu/protractor-styleguide) for tests.__ ⚠️
 
 To make sure each specfile will run correctly, we use a "beforeAll" to prepare for the tests:
 1. ```browser.get``` to load the page
