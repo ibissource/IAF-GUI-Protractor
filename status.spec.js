@@ -45,7 +45,7 @@ describe('Status Page tests', function() {
 
     it("Should filter adapters when using the search field", function() {
         status.searchField.sendKeys("IbisDoc");
-        browser.sleep(200);
+        browser.sleep(1000);
         expect(status.adapters.count()).toBe(1);
         status.searchField.clear();
     }); 
