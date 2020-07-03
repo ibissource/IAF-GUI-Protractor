@@ -1,31 +1,90 @@
-var ladybugPage = require('./pages/ladybug.page');
-var CookieBar = require('./components/cookiebar.component');
+const LadybugPage = require('./pages/ladybug.page');
+const TestPipelinePage = require('./pages/test-pipeline.page');
+const CookieBar = require('./components/cookiebar.component');
 
-describe('Test voor Ladybug foutmelding', function(){	
-	var EC = protractor.ExpectedConditions;	
-	var ladybug = new ladybugPage();
-	var cookiebar = new CookieBar();
+describe('Ladybug Page tests', function(){	
+	let EC = protractor.ExpectedConditions;	
+	let ladybug = new LadybugPage();
+	let testPipelinePage = new TestPipelinePage();
+	let cookiebar = new CookieBar();
+	browser.manage().timeouts().implicitlyWait(10000);
 	
-	beforeAll(function() {
+	beforeEach(function() {		
         browser.waitForAngularEnabled(false);
 		browser.get('#!/testing/ladybug');
-		browser.wait(EC.visibilityOf(ladybug.stage), 30000);
-		//Wait until all text fields have there text set (no longer empty string).
-		browser.wait(function() {return ladybug.stage.getText().then(function(result) {
-            return result != ""
-        })}, 30000);			
+		browser.wait(EC.presenceOf(ladybug.iframe), 30000);		
+        cookiebar.closeIfPresent();
 		// switch to iframe
 		browser.switchTo().frame(ladybug.iframe.getWebElement());
     });
+	afterEach(function() {
+		browser.switchTo().defaultContent();
+	});
 	
-	 beforeEach(function() {
-        cookiebar.closeIfPresent();
-    });
+	it('Should appear a new report after refresh', function(){		
+		ladybug.refreshDebug.click();
+		ladybug.enableReportGenerator();		
+		browser.switchTo().defaultContent();
+		ladybug.goToTestPipeline();
+		browser.waitForAngularEnabled(true);
+		testPipelinePage.testPipeline('Protractor test for Refresh tab');		
+		ladybug.sidebarLadybugTab.click();
+		browser.waitForAngularEnabled(false);
+		browser.switchTo().frame(ladybug.iframe.getWebElement());
+		browser.wait(EC.presenceOf(ladybug.refreshDebug), 3000);
+		ladybug.refreshDebug.click();
+		browser.wait(EC.visibilityOf(ladybug.firstReportInStorage), 3000);
+		ladybug.firstReportInStorage.click();
+		browser.wait(EC.visibilityOf(ladybug.report), 3000);
+		expect(element(by.cssContainingText('span','Protractor test for Refresh tab')).isPresent()).toBe(true);
+	});
+	
+	it('Should not appear a new report after disabled Report Generator', function(){
+		ladybug.refreshDebug.click();
+		ladybug.disableReportGenerator();		
+		browser.switchTo().defaultContent();
+		ladybug.goToTestPipeline();
+		browser.waitForAngularEnabled(true);
+		testPipelinePage.testPipeline('Protractor test for Options tab');		
+		ladybug.sidebarLadybugTab.click();
+		browser.waitForAngularEnabled(false);
+		browser.switchTo().frame(ladybug.iframe.getWebElement());
+		browser.wait(EC.presenceOf(ladybug.refreshDebug), 3000);
+		ladybug.refreshDebug.click();
+		browser.wait(EC.visibilityOf(ladybug.firstReportInStorage), 3000);
+		ladybug.firstReportInStorage.click();
+		browser.wait(EC.visibilityOf(ladybug.report), 3000);
+		expect(element(by.cssContainingText('span','Protractor test for Options tab')).isPresent()).toBe(false);
+	});
+	
+	it('Should show correct amount of reports', function(){
+		// Check for number of reports listed in the storage
+		ladybug.numOfReportsVisible.clear().sendKeys(5);
+		ladybug.refreshDebug.click();
+		browser.wait(EC.invisibilityOf(ladybug.reportsInStorage.get(6)), 3000);
+		expect(ladybug.reportsInStorage.count()).toBe(6);
+		// Check for Open all tab
+		ladybug.closeAllTab.click();
+		ladybug.openAllTab.click();
+		expect(ladybug.toggleReports.isPresent()).toBe(true);
+		// Check for Collapse all tab
+		ladybug.collapseAllTab.click();
+		browser.wait(EC.invisibilityOf(ladybug.report), 3000);
+		expect(ladybug.reportsDirectory.count()).toBe(1);
+		// Check for Reports toggle and Open all tab indeed opens correct amount of reports
+		ladybug.toggleReports.click();
+		browser.wait(EC.visibilityOf(ladybug.report), 3000);
+		expect(ladybug.reportsDirectory.count()).toBe(6);
+		// Check for Close all tab
+		ladybug.closeAllTab.click();
+		browser.wait(EC.invisibilityOf(ladybug.report), 3000);
+		expect(ladybug.toggleReports.isPresent()).toBe(false);		
+	});
 	
 	it('Should give an error message', function(){							
-		// select the first pipeline from the storage
-		browser.wait(EC.presenceOf(ladybug.pipeline), 3000);
-		ladybug.pipeline.click();
+		// select the first report from the storage
+		browser.wait(EC.presenceOf(ladybug.firstReportInStorage), 3000);
+		ladybug.firstReportInStorage.click();
 		// select the first pipeline report from "Reports"
 		browser.wait(EC.presenceOf(ladybug.report), 3000);
 		ladybug.report.click();	
@@ -33,7 +92,6 @@ describe('Test voor Ladybug foutmelding', function(){
 		// copy the report
 		browser.wait(EC.visibilityOf(ladybug.copyTab), 3000);
 		ladybug.copyTab.click();
-		browser.manage().timeouts().implicitlyWait(3000);
 		// set "Report generator enabled" No
 		ladybug.disableReportGenerator();			
 		// go to "Test" tab
