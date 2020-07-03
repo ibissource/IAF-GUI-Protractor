@@ -1,14 +1,4 @@
 var LadybugPage = function() {
-	this.stage = element.all(by.className('m-r-sm stage')).get(0);
-	// sidebar components
-	this.sidebarTestingTab = element(by.className('fa fa-bug'));
-	this.sidebarTestPipelineTab = element(by.css('[ui-sref="pages.test_pipeline"]'));
-	this.sidebarLadybugTab = element(by.css('[ui-sref="pages.ladybug"]'));
-	
-	this.goToTestPipeline = function() {
-		this.sidebarTestingTab.click();
-		this.sidebarTestPipelineTab.click();	
-	};	
 	// Ladybug Debug Page components	
 	this.iframe = element(by.tagName('iframe'));
 	this.refreshDebug = element(by.id('c_16'));

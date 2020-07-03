@@ -21,14 +21,14 @@ describe('Ladybug Page tests', function(){
 		browser.switchTo().defaultContent();
 	});
 	
-	it('Should appear a new report after refresh', function(){		
+	it('When I enable the report generator, test a pipeline and then refresh, should appear a new report in the storage ', function(){		
 		ladybug.refreshDebug.click();
-		ladybug.enableReportGenerator();		
-		browser.switchTo().defaultContent();
-		ladybug.goToTestPipeline();
+		ladybug.enableReportGenerator();
+		// First test a pipeline in the Test Pipeline page, then check for the result in Ladybug
+		browser.get('#!/test-pipeline');
 		browser.waitForAngularEnabled(true);
 		testPipelinePage.testPipeline('Protractor test for Refresh tab');		
-		ladybug.sidebarLadybugTab.click();
+		browser.get('#!/testing/ladybug');
 		browser.waitForAngularEnabled(false);
 		browser.switchTo().frame(ladybug.iframe.getWebElement());
 		browser.wait(EC.presenceOf(ladybug.refreshDebug), 3000);
@@ -39,14 +39,14 @@ describe('Ladybug Page tests', function(){
 		expect(element(by.cssContainingText('span','Protractor test for Refresh tab')).isPresent()).toBe(true);
 	});
 	
-	it('Should not appear a new report after disabled Report Generator', function(){
+	it('When I disable the report generator, test a pipeline and then refresh, should not appear a new report in the storage', function(){
 		ladybug.refreshDebug.click();
-		ladybug.disableReportGenerator();		
-		browser.switchTo().defaultContent();
-		ladybug.goToTestPipeline();
+		ladybug.disableReportGenerator();	
+		// First test a pipeline in the Test Pipeline page, then check for the result in Ladybug
+		browser.get('#!/test-pipeline');
 		browser.waitForAngularEnabled(true);
 		testPipelinePage.testPipeline('Protractor test for Options tab');		
-		ladybug.sidebarLadybugTab.click();
+		browser.get('#!/testing/ladybug');
 		browser.waitForAngularEnabled(false);
 		browser.switchTo().frame(ladybug.iframe.getWebElement());
 		browser.wait(EC.presenceOf(ladybug.refreshDebug), 3000);
@@ -57,31 +57,31 @@ describe('Ladybug Page tests', function(){
 		expect(element(by.cssContainingText('span','Protractor test for Options tab')).isPresent()).toBe(false);
 	});
 	
-	it('Should show correct amount of reports', function(){
-		// Check for number of reports listed in the storage
+	it('Should show correct amount of reports when I click certain tabs', function(){
+		// Should list the correct number of reports in the storage when I input a number 
 		ladybug.numOfReportsVisible.clear().sendKeys(5);
 		ladybug.refreshDebug.click();
 		browser.wait(EC.invisibilityOf(ladybug.reportsInStorage.get(6)), 3000);
 		expect(ladybug.reportsInStorage.count()).toBe(6);
-		// Check for Open all tab
+		// Should open all reports in the reports directory when I click Open all tab
 		ladybug.closeAllTab.click();
 		ladybug.openAllTab.click();
 		expect(ladybug.toggleReports.isPresent()).toBe(true);
-		// Check for Collapse all tab
+		// Should collapse all reports in the reports directory when I click Collepse all tab
 		ladybug.collapseAllTab.click();
 		browser.wait(EC.invisibilityOf(ladybug.report), 3000);
 		expect(ladybug.reportsDirectory.count()).toBe(1);
-		// Check for Reports toggle and Open all tab indeed opens correct amount of reports
+		// Should open correct number of reports in the reports directory when I click Open all tab
 		ladybug.toggleReports.click();
 		browser.wait(EC.visibilityOf(ladybug.report), 3000);
 		expect(ladybug.reportsDirectory.count()).toBe(6);
-		// Check for Close all tab
+		// Should close all reports in the reports directory when I click Close all tab
 		ladybug.closeAllTab.click();
 		browser.wait(EC.invisibilityOf(ladybug.report), 3000);
 		expect(ladybug.toggleReports.isPresent()).toBe(false);		
 	});
 	
-	it('Should give an error message', function(){							
+	it('Should give an error message in the test page when running a report after disabled the report generator', function(){							
 		// select the first report from the storage
 		browser.wait(EC.presenceOf(ladybug.firstReportInStorage), 3000);
 		ladybug.firstReportInStorage.click();
