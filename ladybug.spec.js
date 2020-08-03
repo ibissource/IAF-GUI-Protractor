@@ -25,14 +25,15 @@ describe('Ladybug Page tests', function(){
 		// switch to iframe
 		browser.switchTo().frame(ladybug.iframe.getWebElement());
 		browser.waitForAngularEnabled(false);
+		browser.manage().timeouts().implicitlyWait(1000);
     });
 	afterEach(function() {
 		browser.switchTo().defaultContent();
 		browser.waitForAngularEnabled(true);
+		browser.manage().timeouts().implicitlyWait(0);
 	});
 	
 	it('When I enable the report generator, test a pipeline and then refresh, should appear a new report in the storage ', function(){		
-		browser.manage().timeouts().implicitlyWait(3000);
 		ladybug.refreshDebug.click();
 		ladybug.enableReportGenerator();
 		// First test a pipeline in the Test Pipeline page, then check for the result in Ladybug
