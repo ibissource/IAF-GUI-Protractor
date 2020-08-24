@@ -25,7 +25,7 @@ describe('Ladybug Page tests', function(){
 		// switch to iframe
 		browser.switchTo().frame(ladybug.iframe.getWebElement());
 		browser.waitForAngularEnabled(false);
-		browser.manage().timeouts().implicitlyWait(1000);
+		browser.manage().timeouts().implicitlyWait(5000);
     });
 	afterEach(function() {
 		browser.switchTo().defaultContent();
