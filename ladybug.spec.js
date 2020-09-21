@@ -89,7 +89,7 @@ describe('Ladybug Page tests', function(){
 		browser.wait(EC.presenceOf(ladybug.report), 3000);
 		ladybug.report.click();	
 		// copy the report
-		browser.wait(EC.visibilityOf(ladybug.copyTab), 3000);
+		browser.wait(EC.elementToBeClickable(ladybug.copyTab), 3000);
 		ladybug.copyTab.click();
 		// set "Report generator enabled" No
 		ladybug.disableReportGenerator();			
@@ -100,7 +100,7 @@ describe('Ladybug Page tests', function(){
 			if(result > 2){
 				ladybug.selectAllTab.click();
 				ladybug.deleteTab.click();
-				browser.wait(EC.visibilityOf(ladybug.confirmDelete), 3000);
+				browser.wait(EC.elementToBeClickable(ladybug.confirmDelete), 3000);
 				ladybug.confirmDelete.click();								
 			} else {
 				ladybug.refreshTab.click();				
