@@ -48,6 +48,11 @@ describe('Ladybug Page tests', function(){
 		ladybug.disableReportGenerator();	
 		// First test a pipeline in the Test Pipeline page, then check for the result in Ladybug
 		testAPipeline('Protractor test for Options tab');		
+		// At the following line, the test often failed with the following exception:
+		//     StaleElementReferenceError: stale element reference: element is not attached to the page document.
+		// Martijn suspects that some new element is being introduced in the DOM.
+		// It is tried to solve this with an extra sleep.
+		browser.sleep(3000);
 		ladybug.pipelineMessage.getText().then(function(text){
 			expect(text).not.toContain('Protractor test for Options tab');
 		});	
