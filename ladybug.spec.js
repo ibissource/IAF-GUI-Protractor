@@ -48,6 +48,7 @@ describe('Ladybug Page tests', function(){
 		ladybug.disableReportGenerator();	
 		// First test a pipeline in the Test Pipeline page, then check for the result in Ladybug
 		testAPipeline('Protractor test for Options tab');		
+		browser.sleep(3000);
 		ladybug.pipelineMessage.getText().then(function(text){
 			expect(text).not.toContain('Protractor test for Options tab');
 		});	
