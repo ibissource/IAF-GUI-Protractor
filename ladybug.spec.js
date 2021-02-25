@@ -37,7 +37,8 @@ describe('Ladybug Page tests', function(){
 		ladybug.refreshDebug.click();
 		ladybug.enableReportGenerator();
 		// First test a pipeline in the Test Pipeline page, then check for the result in Ladybug
-		testAPipeline('Protractor test for Refresh tab');	
+		testAPipeline('Protractor test for Refresh tab');
+		browser.sleep(3000);	
 		ladybug.pipelineMessage.getText().then(function(text){
 			expect(text).toContain('Protractor test for Refresh tab');
 		});		
