@@ -18,21 +18,25 @@ describe('Ladybug Page tests', function(){
 		browser.sleep(300);
 		ladybug.firstReportInStorage.click();
 	};
-	
-	beforeEach(function() {		       
+
+	beforeEach(function() {
+		console.log("Doing beforeEach");
 		browser.get('#!/testing/ladybug');
 		cookiebar.closeIfPresent();			       
 		// switch to iframe
 		browser.switchTo().frame(ladybug.iframe.getWebElement());
 		browser.waitForAngularEnabled(false);
+		browser.sleep(5000);
 		browser.manage().timeouts().implicitlyWait(5000);
-    });
+	});
+
 	afterEach(function() {
 		browser.switchTo().defaultContent();
 		browser.waitForAngularEnabled(true);
 		browser.manage().timeouts().implicitlyWait(0);
+		ladybug.enableReportGenerator();
 	});
-	
+
 	it('When I enable the report generator, test a pipeline and then refresh, should appear a new report in the storage ', function(){		
 		ladybug.refreshDebug.click();
 		ladybug.enableReportGenerator();
@@ -48,11 +52,18 @@ describe('Ladybug Page tests', function(){
 		ladybug.refreshDebug.click();
 		ladybug.disableReportGenerator();	
 		// First test a pipeline in the Test Pipeline page, then check for the result in Ladybug
-		testAPipeline('Protractor test for Options tab');		
+		testAPipeline('Report generator disabled, protractor test for Options tab');
 		browser.sleep(3000);
 		ladybug.pipelineMessage.getText().then(function(text){
-			expect(text).not.toContain('Protractor test for Options tab');
-		});	
+			expect(text).not.toContain('Report generator disabled, protractor test for Options tab');
+		});
+		ladybug.refreshDebug.click();
+		ladybug.enableReportGenerator();
+		testAPipeline('Report generator enabled, protractor test for Options tab');
+		browser.sleep(3000);
+		ladybug.pipelineMessage.getText().then(function(text){
+			expect(text).toContain('Report generator enabled, protractor test for Options tab');
+		});
 	});
 	
 	it('Should list the correct number of reports in the storage when input a number', function() { 
@@ -115,6 +126,13 @@ describe('Ladybug Page tests', function(){
 		ladybug.refreshTab.click();
 		ladybug.errorMessage.getText().then(function(text){
 			expect(text).toContain('Result report not found. Report generator not enabled?');
-		});						
+		});
+		// ibis4example is not only used for the Protractor test.
+		// Other users of ibis4example need the report generator enabled.
+		//browser.sleep(5000);
+		//afterEach();
+		//beforeEach();
+		//browser.sleep(5000);
+		//ladybug.enableReportGenerator();						
 	});
 });
