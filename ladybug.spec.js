@@ -20,7 +20,6 @@ describe('Ladybug Page tests', function(){
 	};
 
 	beforeEach(function() {
-		console.log("Doing beforeEach");
 		browser.get('#!/testing/ladybug');
 		cookiebar.closeIfPresent();			       
 		// switch to iframe
@@ -34,7 +33,6 @@ describe('Ladybug Page tests', function(){
 		browser.switchTo().defaultContent();
 		browser.waitForAngularEnabled(true);
 		browser.manage().timeouts().implicitlyWait(0);
-		ladybug.enableReportGenerator();
 	});
 
 	it('When I enable the report generator, test a pipeline and then refresh, should appear a new report in the storage ', function(){		
@@ -127,12 +125,7 @@ describe('Ladybug Page tests', function(){
 		ladybug.errorMessage.getText().then(function(text){
 			expect(text).toContain('Result report not found. Report generator not enabled?');
 		});
-		// ibis4example is not only used for the Protractor test.
-		// Other users of ibis4example need the report generator enabled.
-		//browser.sleep(5000);
-		//afterEach();
-		//beforeEach();
-		//browser.sleep(5000);
-		//ladybug.enableReportGenerator();						
+		ladybug.debugTab.click();
+		ladybug.enableReportGenerator();						
 	});
 });
