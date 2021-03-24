@@ -31,6 +31,7 @@ var LadybugPage = function() {
 							
 	// Ladybug Test Page components
 	this.testTab = element(by.id('c_10_header_td_42'));
+	this.debugTab = element(by.id('c_10_header_td_11'));
 	this.selectAllTab = element(by.id('c_235_cell_c_240'));
 	this.refreshTab = element(by.id('c_235_cell_c_236'));
 	this.reportList = element(by.id('c_234')).all(by.xpath('div/div'));
