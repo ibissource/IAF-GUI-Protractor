@@ -69,13 +69,6 @@ describe('Ladybug Page tests', function(){
 		ladybug.pipelineMessage.getText().then(function(text){
 			expect(text).not.toContain('Report generator disabled, protractor test for Options tab');
 		});
-		ladybug.refreshDebug.click();
-		ladybug.enableReportGenerator();
-		testAPipeline('Report generator enabled, protractor test for Options tab');
-		browser.sleep(3000);
-		ladybug.pipelineMessage.getText().then(function(text){
-			expect(text).toContain('Report generator enabled, protractor test for Options tab');
-		});
 	});
 	
 	it('Should list the correct number of reports in the storage when input a number', function() { 
