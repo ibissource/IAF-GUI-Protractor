@@ -6,11 +6,12 @@ describe('Ladybug Page tests', function(){
 	let EC = protractor.ExpectedConditions;	
 	let ladybug = new LadybugPage();
 	let testPipelinePage = new TestPipelinePage();
-	let cookiebar = new CookieBar();	
-	function testAPipeline(message){
+	let cookiebar = new CookieBar();
+
+	function testAPipeline(message) {
 		browser.get('#!/test-pipeline');
 		browser.waitForAngularEnabled(true);
-		testPipelinePage.testPipeline(message);		
+		testPipelinePage.testPipeline(message);
 		browser.get('#!/testing/ladybug');
 		browser.switchTo().frame(ladybug.iframe.getWebElement());
 		browser.waitForAngularEnabled(false);
@@ -21,7 +22,7 @@ describe('Ladybug Page tests', function(){
 
 	function prepare() {
 		browser.get('#!/testing/ladybug');
-		cookiebar.closeIfPresent();			       
+		cookiebar.closeIfPresent();
 		// switch to iframe
 		browser.switchTo().frame(ladybug.iframe.getWebElement());
 		browser.waitForAngularEnabled(false);
@@ -49,33 +50,33 @@ describe('Ladybug Page tests', function(){
 		teardown();
 	})
 
-	it('When I enable the report generator, test a pipeline and then refresh, should appear a new report in the storage ', function(){		
+	it('When I enable the report generator, test a pipeline and then refresh, should appear a new report in the storage ', function() {
 		ladybug.refreshDebug.click();
 		ladybug.enableReportGenerator();
 		// First test a pipeline in the Test Pipeline page, then check for the result in Ladybug
 		testAPipeline('Protractor test for Refresh tab');
-		browser.sleep(3000);	
-		ladybug.pipelineMessage.getText().then(function(text){
+		browser.sleep(3000);
+		ladybug.pipelineMessage.getText().then(function(text) {
 			expect(text).toContain('Protractor test for Refresh tab');
-		});		
+		});
 	});
 	
-	it('When I disable the report generator, test a pipeline and then refresh, should not appear a new report in the storage', function(){
+	it('When I disable the report generator, test a pipeline and then refresh, should not appear a new report in the storage', function() {
 		ladybug.refreshDebug.click();
-		ladybug.disableReportGenerator();	
+		ladybug.disableReportGenerator();
 		// First test a pipeline in the Test Pipeline page, then check for the result in Ladybug
 		testAPipeline('Report generator disabled, protractor test for Options tab');
 		browser.sleep(3000);
-		ladybug.pipelineMessage.getText().then(function(text){
+		ladybug.pipelineMessage.getText().then(function(text) {
 			expect(text).not.toContain('Report generator disabled, protractor test for Options tab');
 		});
 	});
 	
-	it('Should list the correct number of reports in the storage when input a number', function() { 
+	it('Should list the correct number of reports in the storage when input a number', function() {
 		ladybug.numOfReportsVisible.clear().sendKeys(3);
 		ladybug.refreshDebug.click();
 		browser.wait(EC.invisibilityOf(ladybug.reportsInStorage.get(4)), 3000, 'timeouts, numOfReportsVisible is more than 3');
-		expect(ladybug.reportsInStorage.count()).toBe(4);	
+		expect(ladybug.reportsInStorage.count()).toBe(4);
 		// Set it back to default value
 		ladybug.numOfReportsVisible.clear().sendKeys(10);
 		ladybug.refreshDebug.click();
@@ -100,7 +101,7 @@ describe('Ladybug Page tests', function(){
 		expect(ladybug.toggleReports.isPresent()).toBe(false);
 	});
 	
-	it('Should give an error message in the test page when running a report after disabled the report generator', function(){							
+	it('Should give an error message in the test page when running a report after disabled the report generator', function() {
 		ladybug.enableReportGenerator();
 		testAPipeline('Protractor test for error message');
 		// select the first pipeline report from "Reports"
@@ -110,26 +111,26 @@ describe('Ladybug Page tests', function(){
 		browser.wait(EC.elementToBeClickable(ladybug.copyTab), 3000);
 		ladybug.copyTab.click();
 		// set "Report generator enabled" No
-		ladybug.disableReportGenerator();			
+		ladybug.disableReportGenerator();
 		// go to "Test" tab
-		ladybug.testTab.click();		
-		// click on "Select all" and then "Delete", so can locate the new report 		
-		ladybug.reportList.count().then(function(result){
-			if(result > 2){
+		ladybug.testTab.click();
+		// click on "Select all" and then "Delete", so can locate the new report
+		ladybug.reportList.count().then(function(result) {
+			if(result > 2) {
 				ladybug.selectAllTab.click();
 				ladybug.deleteTab.click();
 				browser.wait(EC.elementToBeClickable(ladybug.confirmDelete), 3000);
-				ladybug.confirmDelete.click();								
+				ladybug.confirmDelete.click();
 			} else {
-				ladybug.refreshTab.click();				
+				ladybug.refreshTab.click();
 			}
-		});	
+		});
 		browser.sleep(500);
-		// select the new report, run and refresh.		
-		ladybug.selectAllTab.click();		
-		ladybug.runTab.click();		
+		// select the new report, run and refresh.
+		ladybug.selectAllTab.click();
+		ladybug.runTab.click();
 		ladybug.refreshTab.click();
-		ladybug.errorMessage.getText().then(function(text){
+		ladybug.errorMessage.getText().then(function(text) {
 			expect(text).toContain('Result report not found. Report generator not enabled?');
 		});
 	});
