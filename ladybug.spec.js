@@ -19,20 +19,35 @@ describe('Ladybug Page tests', function(){
 		ladybug.firstReportInStorage.click();
 	};
 
-	beforeEach(function() {
+	function prepare() {
 		browser.get('#!/testing/ladybug');
 		cookiebar.closeIfPresent();			       
 		// switch to iframe
 		browser.switchTo().frame(ladybug.iframe.getWebElement());
 		browser.waitForAngularEnabled(false);
 		browser.manage().timeouts().implicitlyWait(5000);
-	});
+	}
 
-	afterEach(function() {
+	function teardown() {
 		browser.switchTo().defaultContent();
 		browser.waitForAngularEnabled(true);
 		browser.manage().timeouts().implicitlyWait(0);
+	}
+
+	beforeEach(function() {
+		prepare();
 	});
+
+	afterEach(function() {
+		teardown();
+	});
+
+	afterAll(function(){
+		prepare();
+		ladybug.debugTab.click();
+		ladybug.enableReportGenerator();
+		teardown();
+	})
 
 	it('When I enable the report generator, test a pipeline and then refresh, should appear a new report in the storage ', function(){		
 		ladybug.refreshDebug.click();
@@ -124,7 +139,5 @@ describe('Ladybug Page tests', function(){
 		ladybug.errorMessage.getText().then(function(text){
 			expect(text).toContain('Result report not found. Report generator not enabled?');
 		});
-		ladybug.debugTab.click();
-		ladybug.enableReportGenerator();						
 	});
 });
