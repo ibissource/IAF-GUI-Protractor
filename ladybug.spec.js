@@ -15,6 +15,7 @@ describe('Ladybug Page tests', function(){
 		browser.get('#!/testing/ladybug');
 		browser.switchTo().frame(ladybug.iframe.getWebElement());
 		browser.waitForAngularEnabled(false);
+		ladybug.debugTab.click();
 		ladybug.refreshDebug.click();
 		browser.sleep(300);
 		ladybug.firstReportInStorage.click();
@@ -49,6 +50,34 @@ describe('Ladybug Page tests', function(){
 		ladybug.enableReportGenerator();
 		teardown();
 	})
+
+	it('Should be able to open report in Test tab', function() {
+		ladybug.testTab.click();
+		ladybug.refreshTab.click();
+		ladybug.reportList.count().then(function(result) {
+			console.log("Number of reports: " + result);
+			if(result >= 1) {
+				browser.wait(EC.elementToBeClickable(ladybug.selectAllTab));
+				ladybug.selectAllTab.click();
+				ladybug.deleteTab.click();
+				browser.wait(EC.elementToBeClickable(ladybug.confirmDelete), 3000);
+				ladybug.confirmDelete.click();
+				ladybug.debugTab.click();
+			}
+		});
+		testAPipeline('Protractor test for error message');
+		// select the first pipeline report from "Reports"
+		browser.wait(EC.presenceOf(ladybug.report), 3000);
+		ladybug.report.click();
+		// copy the report
+		browser.wait(EC.elementToBeClickable(ladybug.copyTab), 3000);
+		ladybug.copyTab.click();
+		ladybug.testTab.click();
+		ladybug.refreshTab.click();
+		ladybug.reportList.count().then(function(result) {
+			ladybug.testTabFirstReportOpen.click();
+		});
+	});
 
 	it('When I enable the report generator, test a pipeline and then refresh, should appear a new report in the storage ', function() {
 		ladybug.refreshDebug.click();
@@ -106,7 +135,7 @@ describe('Ladybug Page tests', function(){
 		testAPipeline('Protractor test for error message');
 		// select the first pipeline report from "Reports"
 		browser.wait(EC.presenceOf(ladybug.report), 3000);
-		ladybug.report.click();	
+		ladybug.report.click();
 		// copy the report
 		browser.wait(EC.elementToBeClickable(ladybug.copyTab), 3000);
 		ladybug.copyTab.click();

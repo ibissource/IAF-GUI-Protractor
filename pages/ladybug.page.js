@@ -17,7 +17,11 @@ var LadybugPage = function() {
 	this.pipelineMessage = element(by.css('[valign="top"]'));
 	this.enableGeneratorOption = element(by.id('c_64_item_0'));
 	this.disableGeneratorOption = element(by.id('c_64_item_1'));
-	
+	this.testTabFirstReportOpen = element(by.tagName('table'))
+		.element(by.tagName('tbody'))
+		.element(by.tagName('tr'))
+		.all(by.css('td:nth-child(2)'));
+
 	this.enableReportGenerator = function() {
 		this.optionsTab.click();
 		this.enableGeneratorOption.click();		
@@ -34,7 +38,7 @@ var LadybugPage = function() {
 	this.debugTab = element(by.id('c_10_header_td_11'));
 	this.selectAllTab = element(by.id('c_235_cell_c_240'));
 	this.refreshTab = element(by.id('c_235_cell_c_236'));
-	this.reportList = element(by.id('c_234')).all(by.xpath('div/div'));
+	this.reportList = element(by.id('c_963')).all(by.xpath('table/tbody/tr'));
 	this.deleteTab = element(by.id('c_235_cell_c_245'));
 	this.confirmDelete = element(by.cssContainingText('tr','No, cancel this action')).element(by.css("td:nth-child(1)"));
 	this.runTab = element(by.id('c_235_cell_c_237'));
