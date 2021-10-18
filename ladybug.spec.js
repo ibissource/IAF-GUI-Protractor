@@ -8,6 +8,8 @@ describe('Ladybug Page tests', function(){
 	let testPipelinePage = new TestPipelinePage();
 	let cookiebar = new CookieBar();
 
+	let reportTableRowsHeaderCount = 2;
+
 	function testAPipeline(message) {
 		browser.get('#!/test-pipeline');
 		browser.waitForAngularEnabled(true);
@@ -50,34 +52,6 @@ describe('Ladybug Page tests', function(){
 		ladybug.enableReportGenerator();
 		teardown();
 	})
-
-	it('Should be able to open report in Test tab', function() {
-		ladybug.testTab.click();
-		ladybug.refreshTab.click();
-		ladybug.reportList.count().then(function(result) {
-			console.log("Number of reports: " + result);
-			if(result >= 1) {
-				browser.wait(EC.elementToBeClickable(ladybug.selectAllTab));
-				ladybug.selectAllTab.click();
-				ladybug.deleteTab.click();
-				browser.wait(EC.elementToBeClickable(ladybug.confirmDelete), 3000);
-				ladybug.confirmDelete.click();
-				ladybug.debugTab.click();
-			}
-		});
-		testAPipeline('Protractor test for error message');
-		// select the first pipeline report from "Reports"
-		browser.wait(EC.presenceOf(ladybug.report), 3000);
-		ladybug.report.click();
-		// copy the report
-		browser.wait(EC.elementToBeClickable(ladybug.copyTab), 3000);
-		ladybug.copyTab.click();
-		ladybug.testTab.click();
-		ladybug.refreshTab.click();
-		ladybug.reportList.count().then(function(result) {
-			ladybug.testTabFirstReportOpen.click();
-		});
-	});
 
 	it('When I enable the report generator, test a pipeline and then refresh, should appear a new report in the storage ', function() {
 		ladybug.refreshDebug.click();
@@ -144,8 +118,8 @@ describe('Ladybug Page tests', function(){
 		// go to "Test" tab
 		ladybug.testTab.click();
 		// click on "Select all" and then "Delete", so can locate the new report
-		ladybug.reportList.count().then(function(result) {
-			if(result > 2) {
+		ladybug.reportTableRows.count().then(function(result) {
+			if(result - reportTableRowsHeaderCount > 2) {
 				ladybug.selectAllTab.click();
 				ladybug.deleteTab.click();
 				browser.wait(EC.elementToBeClickable(ladybug.confirmDelete), 3000);
@@ -162,5 +136,49 @@ describe('Ladybug Page tests', function(){
 		ladybug.errorMessage.getText().then(function(text) {
 			expect(text).toContain('Result report not found. Report generator not enabled?');
 		});
+	});
+
+	it('Should be able to open report in Test tab', function() {
+		ladybug.testTab.click();
+		ladybug.refreshTab.click();
+		ladybug.reportTableRows.count().then(function(result) {
+			if(result - reportTableRowsHeaderCount >= 1) {
+				console.log('Deleting old reports');
+				browser.wait(EC.elementToBeClickable(ladybug.selectAllTab));
+				ladybug.selectAllTab.click();
+				ladybug.deleteTab.click();
+				browser.wait(EC.elementToBeClickable(ladybug.confirmDelete), 3000);
+				ladybug.confirmDelete.click();
+				ladybug.debugTab.click();
+			}
+		});
+		testAPipeline('Protractor test for error message');
+		// select the first pipeline report from "Reports"
+		browser.wait(EC.presenceOf(ladybug.report), 3000);
+		browser.sleep(3000);
+		ladybug.report.click();
+		// copy the report
+		browser.wait(EC.elementToBeClickable(ladybug.copyTab), 3000);
+		ladybug.copyTab.click();
+		ladybug.testTab.click();
+		ladybug.refreshTab.click();
+		ladybug.reportTableRows.count().then(function(result) {
+			if(result - reportTableRowsHeaderCount >= 2) {
+				console.log("After deleting all reports and creating one, have " + result);
+				expect(false);
+			}
+			ladybug.testTabFirstReportOpen.click();
+		});
+		console.log("Report should have been opened. Checking whether that has happened");
+		/*
+		browser.wait(EC.presenceOf(ladybug.textOpenedFirstReport));
+		console.log("Have presence of HTML element");
+		ladybug.textOpenedFirstReport.getText().then(text => {
+			console.log('Have the text');
+			expect(text).toEqual('Protractor test for error message');
+			console.log('Checked the text');
+		});
+		*/
+		ladybug.testTab.click();
 	});
 });

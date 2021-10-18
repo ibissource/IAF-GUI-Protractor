@@ -21,7 +21,8 @@ var LadybugPage = function() {
 		.element(by.tagName('tbody'))
 		.element(by.tagName('tr'))
 		.all(by.css('td:nth-child(2)'));
-
+	expectedText = 'Protractor test for error message';
+	this.textOpenedFirstReport = element(by.xpath("//span[contains(., '" + expectedText + "')]"));
 	this.enableReportGenerator = function() {
 		this.optionsTab.click();
 		this.enableGeneratorOption.click();		
@@ -38,7 +39,7 @@ var LadybugPage = function() {
 	this.debugTab = element(by.id('c_10_header_td_11'));
 	this.selectAllTab = element(by.id('c_235_cell_c_240'));
 	this.refreshTab = element(by.id('c_235_cell_c_236'));
-	this.reportList = element(by.id('c_963')).all(by.xpath('table/tbody/tr'));
+	this.reportTableRows = element(by.id('c_234')).all(by.tagName('div'));
 	this.deleteTab = element(by.id('c_235_cell_c_245'));
 	this.confirmDelete = element(by.cssContainingText('tr','No, cancel this action')).element(by.css("td:nth-child(1)"));
 	this.runTab = element(by.id('c_235_cell_c_237'));
