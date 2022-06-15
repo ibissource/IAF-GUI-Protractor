@@ -2,7 +2,7 @@ const JasmineConsoleReporter = require('jasmine-console-reporter');
 
 exports.config = {
     framework: 'jasmine2',
-    baseUrl: 'https://ibis4example.ibissource.org/iaf/gui',
+    baseUrl: 'https://frank2example.frankframework.org/iaf/gui',
     directConnect: true,
 
     capabilities: {
