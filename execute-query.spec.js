@@ -47,7 +47,7 @@ describe('Execute Query Page tests', function() {
         querypage.btnSend.click();
         browser.wait(EC.visibilityOf(querypage.warning), 1000);
         querypage.warning.getText().then(function(text) {
-            expect(text).toContain('error');
+            expect(text).toContain('Error');
         });
     });
 });
