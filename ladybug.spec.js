@@ -90,7 +90,7 @@ describe('Ladybug Page tests', function(){
 		// Should collapse all reports in the reports directory when I click Collepse all tab
 		ladybug.collapseAllTab.click();
 		browser.wait(EC.invisibilityOf(ladybug.report), 3000);
-		expect(ladybug.reportsDirectory.count()).toBe(1);
+		expect(ladybug.reportsDirectory.count()).toBeGreaterThanOrEqual(1);
 		// Should open correct number of reports in the reports directory when I click Open all tab
 		ladybug.toggleReports.click();
 		browser.wait(EC.visibilityOf(ladybug.report), 3000);
