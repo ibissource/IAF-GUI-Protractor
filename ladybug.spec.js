@@ -94,7 +94,7 @@ describe('Ladybug Page tests', function(){
 		// Should open correct number of reports in the reports directory when I click Open all tab
 		ladybug.toggleReports.click();
 		browser.wait(EC.visibilityOf(ladybug.report), 3000);
-		expect(ladybug.reportsDirectory.count()).toBe(11);
+		expect(ladybug.reportsDirectory.count()).toBe(9);
 		// Should close all reports in the reports directory when I click Close all tab
 		ladybug.closeAllTab.click();
 		browser.wait(EC.invisibilityOf(ladybug.report), 3000);
