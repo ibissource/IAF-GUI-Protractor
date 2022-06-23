@@ -44,6 +44,8 @@ describe('Ladybug Page tests', function(){
 	});
 
 	beforeAll(function() {
+		prepare();
+		ladybug.debugTab.click();
 		ladybug.enableReportGenerator();
 		// The test depends on the existence of many Ladybug reports. Create them.
 		testAPipeline("msg 1");
@@ -58,6 +60,7 @@ describe('Ladybug Page tests', function(){
 		testAPipeline("msg 10");
 		testAPipeline("msg 11");
 		testAPipeline("msg 12");
+		ladybug.debugTab.click();
 	});
 
 	afterAll(function(){
