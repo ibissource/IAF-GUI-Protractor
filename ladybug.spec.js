@@ -43,6 +43,23 @@ describe('Ladybug Page tests', function(){
 		teardown();
 	});
 
+	beforeAll(function() {
+		ladybug.enableReportGenerator();
+		// The test depends on the existence of many Ladybug reports. Create them.
+		testAPipeline("msg 1");
+		testAPipeline("msg 2");
+		testAPipeline("msg 3");
+		testAPipeline("msg 4");
+		testAPipeline("msg 5");
+		testAPipeline("msg 6");
+		testAPipeline("msg 7");
+		testAPipeline("msg 8");
+		testAPipeline("msg 9");
+		testAPipeline("msg 10");
+		testAPipeline("msg 11");
+		testAPipeline("msg 12");
+	});
+
 	afterAll(function(){
 		prepare();
 		ladybug.debugTab.click();
