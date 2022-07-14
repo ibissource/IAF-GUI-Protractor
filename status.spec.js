@@ -16,12 +16,14 @@ describe('Status Page tests', function() {
     });
 
     it("Should show filter buttons", function() {
-        expect(status.filterStarted.isPresent()).toBe(true);
-        expect(status.filterStopped.isPresent()).toBe(true);
-        expect(status.filterWarning.isPresent()).toBe(true);
+        expect(status.filterStarted.isDisplayed()).toBe(true);
+        expect(status.filterStopped.isDisplayed()).toBe(true);
+        expect(status.filterWarning.isDisplayed()).toBe(true);
     });
 
     it("When I click the started filter button its background should turn to transparent",  function() {
+        expect(status.filterStarted.isDisplayed()).toBe(true);
+        expect(status.filterStarted.getCssValue('background-color')).toEqual("rgba(24, 166, 137, 1)");
         status.filterStarted.click();
         element(by.css("div.input-group input.form-control")).click(); //click element to remove focus
         browser.sleep(500);
