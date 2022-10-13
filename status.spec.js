@@ -27,10 +27,10 @@ describe('Status Page tests', function() {
         status.filterStarted.click();
         element(by.css("div.input-group input.form-control")).click(); //click element to remove focus
         browser.sleep(500);
-        // rgba(0, 0, 0, 0) would also be OK, but it is difficult to allow both options.
+        // rgba(0, 0, 0, 0) and rgba(24, 166, 137, 0) are both OK.
         // The fourth value expresses the opacity. If it is zero, the color in the
         // first three values does not matter.
-        expect(status.filterStarted.getCssValue('background-color')).toEqual("rgba(24, 166, 137, 0)");
+        expect(status.filterStarted.getCssValue('background-color')).toMatch("rgba\\([0-9], [0-9], [0-9], 0\\)");
         status.filterStarted.click();
     });
 
