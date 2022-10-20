@@ -16,7 +16,7 @@ describe('Ladybug Page tests', function(){
 		browser.switchTo().frame(ladybug.iframe.getWebElement());
 		browser.waitForAngularEnabled(false);
 		ladybug.refreshDebug.click();
-		browser.sleep(300);
+		browser.sleep(1000);
 		ladybug.firstReportInStorage.click();
 	};
 
@@ -136,6 +136,7 @@ describe('Ladybug Page tests', function(){
 		ladybug.report.click();	
 		// copy the report
 		browser.wait(EC.elementToBeClickable(ladybug.copyTab), 3000);
+		browser.sleep(1000);
 		ladybug.copyTab.click();
 		// set "Report generator enabled" No
 		ladybug.disableReportGenerator();
