@@ -21,16 +21,13 @@ describe('Status Page tests', function() {
         expect(status.filterWarning.isDisplayed()).toBe(true);
     });
 
-    it("When I click the started filter button its background should turn to transparent",  function() {
+    it("When I click the started filter button the filter should become active",  function() {
         expect(status.filterStarted.isDisplayed()).toBe(true);
-        expect(status.filterStarted.getCssValue('background-color')).toEqual("rgba(24, 166, 137, 1)");
+        expect(status.filterStarted.getAttribute('class')).toContain('active');
         status.filterStarted.click();
         element(by.css("div.input-group input.form-control")).click(); //click element to remove focus
         browser.sleep(5000);
-        // rgba(0, 0, 0, 0) and rgba(24, 166, 137, 0) are both OK.
-        // The fourth value expresses the opacity. If it is zero, the color in the
-        // first three values does not matter.
-        expect(status.filterStarted.getCssValue('background-color')).toMatch("rgba\\([0-9], [0-9], [0-9], 0\\)");
+        expect(status.filterStarted.getAttribute('class')).not.toContain('active');
         status.filterStarted.click();
     });
 
