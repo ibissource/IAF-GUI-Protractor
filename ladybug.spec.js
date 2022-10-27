@@ -136,6 +136,7 @@ describe('Ladybug Page tests', function(){
 		ladybug.report.click();	
 		// copy the report
 		browser.wait(EC.elementToBeClickable(ladybug.copyTab), 3000);
+		browser.sleep(500);
 		ladybug.copyTab.click();
 		// set "Report generator enabled" No
 		ladybug.disableReportGenerator();
