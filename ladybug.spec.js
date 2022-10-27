@@ -128,7 +128,7 @@ describe('Ladybug Page tests', function(){
 		expect(ladybug.toggleReports.isPresent()).toBe(false);
 	});
 	
-	it('Should give an error message in the test page when running a report after disabled the report generator', function() {
+	xit('Should give an error message in the test page when running a report after disabled the report generator', function() {
 		ladybug.enableReportGenerator();
 		testAPipeline('Protractor test for error message');
 		// select the first pipeline report from "Reports"
