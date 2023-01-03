@@ -9,7 +9,7 @@ describe('Test A Pipeline Page tests', function() {
     beforeEach(function() {
 		browser.get("#!/test-pipeline");
 		//browser.sleep(1000);
-        browser.wait(EC.presenceOf(testPipelinePage.adapter), 100000);
+        browser.wait(EC.presenceOf(testPipelinePage.configuration), 10000);
         cookiebar.closeIfPresent();
     });
     
