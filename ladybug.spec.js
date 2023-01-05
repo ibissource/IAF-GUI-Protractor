@@ -15,8 +15,11 @@ describe('Ladybug Page tests', function(){
 		browser.get('#!/testing/ladybug');
 		browser.switchTo().frame(ladybug.iframe.getWebElement());
 		browser.waitForAngularEnabled(false);
+		let EC = protractor.ExpectedConditions;
+		browser.wait(EC.visibilityOf(ladybug.refreshDebug), 5000);
 		ladybug.refreshDebug.click();
-		browser.sleep(300);
+		browser.wait(EC.visibilityOf(ladybug.firstReportInStorage), 10000);
+		browser.sleep(5000);
 		ladybug.firstReportInStorage.click();
 	};
 
